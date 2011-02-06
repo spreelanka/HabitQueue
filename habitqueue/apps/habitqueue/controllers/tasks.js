@@ -44,7 +44,9 @@ Habitqueue.tasksController = SC.ArrayController.create(
 	    // create a new task in the store
 	    task = Habitqueue.store.createRecord(Habitqueue.Task, {
 	      "description": "New Task", 
-	      "isDone": false
+	      "isDone": false,
+		  "procrasts": 0,
+		  "tag": "unknown"
 	    });
 
 	    // select new task in UI

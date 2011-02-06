@@ -17,7 +17,11 @@ Habitqueue.Task = SC.Record.extend(
 	primaryKey: "_id",
 	isDone: SC.Record.attr(Boolean),
 	description: SC.Record.attr(String),
-	procrast: SC.Record.attr(Number),
-	tag: SC.Record.attr(String)
+	procrasts: SC.Record.attr(Number),
+	tag: SC.Record.attr(String),
+	
+	displayName: function() {
+	    return this.get('description');
+	  }.property('description').cacheable()
 
 }) ;

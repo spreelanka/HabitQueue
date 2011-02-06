@@ -3,6 +3,31 @@
 // Copyright: ©2011 My Company, Inc.
 // ==========================================================================
 /*globals Habitqueue */
+var junk= SC.TableColumn.create({
+    key:   'description',
+    label: 'Task',
+    width: 500
+  });
+var tableColumns = [
+  SC.TableColumn.create({
+    key:   'description',
+    label: 'Task',
+    width: 500
+  }),
+  SC.TableColumn.create({
+    key:   'tag',
+    label: 'Tag',
+	width: 200,
+    minWidth: 150
+  }),
+  SC.TableColumn.create({
+    key:   'procrasts',
+    label: 'Procrasts',
+    width: 200,
+    minWidth: 150
+  })  
+];
+
 
 // This page describes the main user interface for your application.  
 Habitqueue.mainPage = SC.Page.design({
@@ -33,24 +58,58 @@ Habitqueue.mainPage = SC.Page.design({
 		      })
 
 	    }),
+////working tableview uneditable
+	    // middleView: SC.TableView.design({
+	    //   backgroundColor: "white",
+	    //   layout: { top: 42, bottom: 42, left: 0, right: 0 },
+	    // 
+	    //   columns: tableColumns,
+	    //   flexibleColumn:   tableColumns.objectAt(0),
+	    //   contentBinding:   'Habitqueue.tasksController.arrangedObjects',
+	    //   selectionBinding: 'Habitqueue.tasksController.selection',
+	    //   canReorderContent: YES,
+	    //   exampleView: SC.TableRowView,
+	    //   recordType: Habitqueue.Task
+	    // }),
+	
+		middleView: SC.ScrollView.design({
+	 	      hasHorizontalScroller: NO,
+	 	      layout: { top: 36, bottom: 32, left: 0, right: 0 },
+	 	      backgroundColor: 'white',
+	 
+	 	      contentView: SC.TableView.design({
+			      backgroundColor: "white",
+			      layout: { top: 42, bottom: 42, left: 0, right: 0 },
 
-	    middleView: SC.ScrollView.design({
-	      hasHorizontalScroller: NO,
-	      layout: { top: 36, bottom: 32, left: 0, right: 0 },
-	      backgroundColor: 'white',
-
-	      contentView: SC.ListView.design({
-			contentBinding: 'Habitqueue.tasksController.arrangedObjects',
-			selectionBinding: 'Habitqueue.tasksController.selection',
-			contentValueKey: "description",
-			contentCheckboxKey: "isDone",
-			rowHeight: 21,
-			canEditContent: YES,
-			canDeleteContent: YES,
-			target: "Habitqueue.tasksController",
-			action: "toggleDone"
-	      })
-	    }),
+			      columns: tableColumns,
+			      flexibleColumn:   tableColumns.objectAt(0),
+			      contentBinding:   'Habitqueue.tasksController.arrangedObjects',
+			      selectionBinding: 'Habitqueue.tasksController.selection',
+			      canReorderContent: YES,
+			      exampleView: SC.TableRowView,
+			      recordType: Habitqueue.Task
+			    })
+	 	    }),
+	
+	
+///original
+	 // SC.ScrollView.design({
+	 // 	      hasHorizontalScroller: NO,
+	 // 	      layout: { top: 36, bottom: 32, left: 0, right: 0 },
+	 // 	      backgroundColor: 'white',
+	 // 
+	 // 	      contentView: SC.ListView.design({
+	 // 			contentBinding: 'Habitqueue.tasksController.arrangedObjects',
+	 // 			selectionBinding: 'Habitqueue.tasksController.selection',
+	 // 			contentValueKey: "description",
+	 // 			contentCheckboxKey: "isDone",
+	 // 			rowHeight: 21,
+	 // 			canEditContent: YES,
+	 // 			canDeleteContent: YES,
+	 // 			target: "Habitqueue.tasksController",
+	 // 			action: "toggleDone"
+	 // 	      })
+	 // 	    }),
 
 	    bottomView: SC.ToolbarView.design({
 	      layout: { bottom: 0, left: 0, right: 0, height: 32 },

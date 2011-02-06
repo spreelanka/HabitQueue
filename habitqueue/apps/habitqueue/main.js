@@ -29,6 +29,7 @@ Habitqueue.main = function main() {
 	var tasks = Habitqueue.store.find(query);
 
 	Habitqueue.tasksController.set('content', tasks);
+	Habitqueue.tasksController.set('columnNames',"description tag procrasts".w());
 
 } ;
 
