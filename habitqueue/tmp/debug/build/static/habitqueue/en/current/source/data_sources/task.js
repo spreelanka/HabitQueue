@@ -3,7 +3,7 @@
 // Copyright: ©2011 My Company, Inc.
 // ==========================================================================
 /*globals Habitqueue */
-sc_require('models/task');
+//sc_require('models/task');
 Habitqueue.TASKS_QUERY = SC.Query.local(Habitqueue.Task, {
   orderBy: 'isDone,description'
 });
@@ -15,15 +15,17 @@ Habitqueue.TASKS_QUERY = SC.Query.local(Habitqueue.Task, {
 */
 Habitqueue.TaskDataSource = SC.DataSource.extend(
 /** @scope Habitqueue.TaskDataSource.prototype */ {
-	_dbpath: 'habitqueue',
 	
-	getServerPath: function(resourceName) {
-	     var path = '/' + this._dbpath + "//" + resourceName;
-	     return path;
-	},
-	     getServerView: function(viewName) {
-	     var path = '/' + this._dbpath + "/_design/app/_view/" + viewName;
-	     return path;
+	_dbpath: 'habitqueue',
+
+	 getServerPath: function(resourceName) {
+	   var path = '/' + this._dbpath + "//" + resourceName;
+	   return path;
+	 },
+	
+	getServerView: function(viewName) {
+		var path = '/' + this._dbpath + "/_design/app/_view/" + viewName;
+		return path;
 	},
 	
 
@@ -46,6 +48,7 @@ Habitqueue.TaskDataSource = SC.DataSource.extend(
 	    var body = response.get('encodedBody');
 	    var couchResponse = SC.json.decode(body);
 	    var records = couchResponse.rows.getEach('value');
+		console.log(records);
 	    store.loadRecords(Habitqueue.Task, records);
 	    store.dataSourceDidFetchQuery(query);
 	 } else {
@@ -59,12 +62,29 @@ Habitqueue.TaskDataSource = SC.DataSource.extend(
   // 
   
   retrieveRecord: function(store, storeKey) {
-	      return NO ; // return YES if you handled the storeKey
-	  },
-	  /**
-	     Process response from CouchDB of create, update, delete operations. @returns id,rev for success, null for failure. */
-	     processResponse: function(response) {
-	          if (SC.ok(response)) {
+      if (SC.kindOf(store.recordTypeFor(storeKey), Habitqueue.Task)) {
+			var id = store.idFor(storeKey);
+			SC.Request.getUrl(this.getServerPath(id))
+			          .header('Accept', 'application/json').json()
+			      .notify(this, 'didRetrieveTask', store, storeKey)
+			      .send();
+
+			return YES;
+		}
+  },
+
+  didRetrieveTask: function(response, store, storeKey) {
+    if (SC.ok(response)) {
+      var dataHash = response.get('body').content;
+      store.dataSourceDidComplete(storeKey, dataHash);
+
+    } else store.dataSourceDidError(storeKey, response);
+  }, 
+
+  /**
+     Process response from CouchDB of create, update, delete operations. @returns id,rev for success, null for failure. */
+     processResponse: function(response) {
+ 	         if (SC.ok(response)) {
 	               var body = response.get('encodedBody');
 	               var couchResponse = SC.json.decode(body);
 	               var ok = couchResponse.ok;
@@ -78,8 +98,8 @@ Habitqueue.TaskDataSource = SC.DataSource.extend(
 	       },
 	  /**
 	Get the latest revision of the document. For docs which were fetch from the server we use _rev field, and for docs that were modified we use the local _docsRev dictionary. */
-		  getDocRev: function(doc) {
-	return doc._rev;
+	  getDocRev: function(doc) {
+			return doc._rev;
 	  },
   
   	createRecord: function(store, storeKey) {

@@ -24,8 +24,10 @@ Habitqueue.main = function main() {
 
   // TODO: Set the content property on your primary controller
   // ex: Habitqueue.contactsController.set('content',Habitqueue.contacts);
-	var query = SC.Query.local(Habitqueue.Task, { orderBy: 'isDone,description' });
-	var tasks = Habitqueue.store.find(Habitqueue.TASKS_QUERY);
+	// var query = SC.Query.local(Habitqueue.Task, { orderBy:'isDone, description' });
+	var query = Habitqueue.TASKS_QUERY;
+	var tasks = Habitqueue.store.find(query);
+
 	Habitqueue.tasksController.set('content', tasks);
 
 } ;

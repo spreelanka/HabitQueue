@@ -16,6 +16,7 @@ Habitqueue.tasksController = SC.ArrayController.create(
 
 	summary: function() {
 	    var len = this.get('length'), ret ;
+		SC.mydebug2=this;
 
 	    if (len && len > 0) {
 	      ret = len === 1 ? "1 task" : "%@ tasks".fmt(len);
