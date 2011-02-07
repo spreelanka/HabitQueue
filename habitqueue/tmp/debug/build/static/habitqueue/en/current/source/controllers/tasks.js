@@ -42,9 +42,11 @@ Habitqueue.tasksController = SC.ArrayController.create(
 	    var task;
 
 	    // create a new task in the store
-	    task = Habitqueue.store.createRecord(Habitqueue.Task, {
+	    task = Habitqueue.store.createRecord(Habitqueue.Task, {//Cannot call method '_computeNextValidKeyView' of null
 	      "description": "New Task", 
-	      "isDone": false
+	      "isDone": false,
+		  "procrasts": 0,
+		  "tag": "unknown"
 	    });
 
 	    // select new task in UI
@@ -53,7 +55,7 @@ Habitqueue.tasksController = SC.ArrayController.create(
 	    // activate inline editor once UI can repaint
 	    this.invokeLater(function() {
 	      var contentIndex = this.indexOf(task);
-	      var list = Habitqueue.mainPage.getPath('mainPane.middleView.contentView');
+	      var list = Habitqueue.mainPage.getPath('mainPane.middleView.contentView.topLeftView');
 	      var listItem = list.itemViewForContentIndex(contentIndex);
 	      listItem.beginEditing();
 	    });

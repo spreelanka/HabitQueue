@@ -35,11 +35,13 @@ Habitqueue.TaskDataSource = SC.DataSource.extend(
 
   fetch: function(store, query) {
      if (query === Habitqueue.TASKS_QUERY) {
+		
           SC.Request.getUrl(this.getServerView('allTasks')).json()
                          .header('Accept', 'application/json')
                          .notify(this, 'didFetchTasks', store, query)
                          .send();
           return YES;
+
      }
     return NO ; // return YES if you handled the query
   },

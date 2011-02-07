@@ -1,0 +1,15 @@
+/* >>>>>>>>>> BEGIN source/resources/frames_etc.css */
+.composition-monitor {
+	 border-left: 3px #555 solid;
+	 background: #abc;
+}
+.icon{
+	border-left: 20px #abc solid;/*i know i'm a css noob mk but it works.*/
+}
+
+DIV#visualization
+{
+	width: 100%;
+	height: 100%;
+}
+

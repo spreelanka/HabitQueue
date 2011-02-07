@@ -4,6 +4,88 @@
 // ==========================================================================
 /*globals Habitqueue */
 
+Habitqueue.iconsPage = SC.Page.create({
+  
+  mainView: SC.LabelView.design({
+    escapeHTML: NO,
+    classNames: 'composition-monitor',
+    value: function() {  
+      
+		var k='alert';
+		var iconSize=48;
+		var ret='<div class="icon"><div class="inner"><img src="%@" class="icon sc-icon-%@-%@" style="height: %@px; width: %@px; position: relative" /></div><label>sc-icon-%@-%@</label></div>'.fmt('/static/sproutcore/foundation/en/current/blank.gif?1296877287', k, iconSize, iconSize, iconSize, k, iconSize);
+		return ret+ret+ret;
+    }()
+  })
+
+});
+
+Habitqueue.compositionChart = SC.Page.create({
+  mainView: SC.LabelView.design({
+    escapeHTML: NO,
+    classNames: 'composition-monitor',
+	value: '<h3>This is who you are</h3><div id="visualization">NOTHING IS HAPPENING WTF</div>',
+	didAppendToDocument: function(){ 
+	        this.initChart(); 
+	},
+    initChart: function () { 
+    	var canvasId = "visualization";
+
+         var data = new google.visualization.DataTable(); 
+
+                data.addColumn('string', 'lifelet'); 
+
+                data.addColumn('number', 'percent'); 
+                data.addRows([ 
+                  ['January',{v:20, f:'$20M'}], 
+                  ['February',{v:31, f:'$31M'}], 
+                  ['March',{v:61, f:'$61M'}], 
+                  ['April',{v:26, f:'$26M'}] 
+                ]); 
+// console.log(document.getElementById(canvasId));
+// 				console.log("bout to return");
+// 				return "not much";
+                // Create and draw the visualization. 
+				var ele=document.getElementById(canvasId);
+				if(ele){
+	                new google.visualization.PieChart( 
+	                  ele). 
+	                    draw(data, {is3D:true}); 
+				}
+				
+  			}
+	})
+});
+
+
+// SC.View.extend({ 
+//   didAppendToDocument: function(){ 
+//         this.initChart(); 
+//   }, 
+//   initChart: function () { 
+//     var canvasId = this.get("layerId"); 
+//          var data = new google.visualization.DataTable(); 
+//                 data.addColumn('string', 'Month'); 
+//                 data.addColumn('number', 'Sales'); 
+//                 data.addRows([ 
+//                   ['January',{v:20, f:'$20M'}], 
+//                   ['February',{v:31, f:'$31M'}], 
+//                   ['March',{v:61, f:'$61M'}], 
+//                   ['April',{v:26, f:'$26M'}] 
+//                 ]); 
+//                 // Create and draw the visualization. 
+//                 new google.visualization.PieChart( 
+//                   document.getElementById(canvasId)). 
+//                     draw(data, {is3D:true}); 
+//   } 
+// }).create;
+
+
+
+
+
+
+
 // This page describes the main user interface for your application.  
 Habitqueue.mainPage = SC.Page.design({
 
@@ -33,24 +115,70 @@ Habitqueue.mainPage = SC.Page.design({
 		      })
 
 	    }),
+		middleView: SC.ScrollView.design({
+		 	      hasHorizontalScroller: NO,
+		 	      layout: { top: 36, bottom: 32, left: 0, right: 0 },
+		 	      backgroundColor: 'white',
+		 
+		 	      contentView: SC.SplitView.design({
+			        layout: { top: 0, left: 0, bottom: 0, right: 0 },
+					layoutDirection: SC.LAYOUT_HORIZONTAL,
+					autoresizeBehavior: SC.RESIZE_TOP_LEFT,
 
-	    middleView: SC.ScrollView.design({
-	      hasHorizontalScroller: NO,
-	      layout: { top: 36, bottom: 32, left: 0, right: 0 },
-	      backgroundColor: 'white',
+					defaultThickness: 0.5,
+//			        childViews: 'descriptionView tagView'.w(),
 
-	      contentView: SC.ListView.design({
-			contentBinding: 'Habitqueue.tasksController.arrangedObjects',
-			selectionBinding: 'Habitqueue.tasksController.selection',
-			contentValueKey: "description",
-			contentCheckboxKey: "isDone",
-			rowHeight: 21,
-			canEditContent: YES,
-			canDeleteContent: YES,
-			target: "Habitqueue.tasksController",
-			action: "toggleDone"
-	      })
-	    }),
+			        topLeftView:SC.SplitView.design({
+			          layout: { left: 0, top: 70, right: 0, bottom: 0 },
+			          layoutDirection: SC.LAYOUT_HORIZONTAL,
+						topLeftView: SC.ListView.design({
+				 			contentBinding: 'Habitqueue.tasksController.arrangedObjects',
+				 			selectionBinding: 'Habitqueue.tasksController.selection',
+				 			contentValueKey: "description",
+				 			contentCheckboxKey: "isDone",
+				 			rowHeight: 21,
+				 			canEditContent: YES,
+				 			canDeleteContent: YES,
+				 			target: "Habitqueue.tasksController",
+				 			action: "toggleDone"
+				 	      }),
+
+				        bottomRightView: SC.ListView.design({
+				 			contentBinding: 'Habitqueue.tasksController.arrangedObjects',
+				 			selectionBinding: 'Habitqueue.tasksController.selection',
+				 			contentValueKey: "tag",
+	//			 			contentCheckboxKey: "isDone",
+				 			rowHeight: 21,
+				 			canEditContent: YES,
+				 			canDeleteContent: YES,
+				 			target: "Habitqueue.tasksController",
+				 			action: "toggleDone"
+				 	      })
+					}),
+					bottomRightView: Habitqueue.compositionChart.mainView
+				})
+					
+			
+		 	}),
+			
+////working original listview		
+				// middleView: SC.ScrollView.design({
+				//  	      hasHorizontalScroller: NO,
+				//  	      layout: { top: 36, bottom: 32, left: 0, right: 0 },
+				//  	      backgroundColor: 'white',
+				// 
+				//  	      contentView: SC.ListView.design({
+				//  			contentBinding: 'Habitqueue.tasksController.arrangedObjects',
+				//  			selectionBinding: 'Habitqueue.tasksController.selection',
+				//  			contentValueKey: "description",
+				//  			contentCheckboxKey: "isDone",
+				//  			rowHeight: 21,
+				//  			canEditContent: YES,
+				//  			canDeleteContent: YES,
+				//  			target: "Habitqueue.tasksController",
+				//  			action: "toggleDone"
+				//  	      })
+				//  	    }),
 
 	    bottomView: SC.ToolbarView.design({
 	      layout: { bottom: 0, left: 0, right: 0, height: 32 },
@@ -68,4 +196,29 @@ Habitqueue.mainPage = SC.Page.design({
   })
 
 });
+
+//probably a better way to do this
+//var junk = Habitqueue.compositionChart.mainView.call_to_create_chart();
+//console.log(junk);
+
+// function () { 
+// 	var canvasId = "visualization";
+//      var data = new google.visualization.DataTable(); 
+// return;
+//             data.addColumn('string', 'Month'); 
+//             data.addColumn('number', 'Sales'); 
+//             data.addRows([ 
+//               ['January',{v:20, f:'$20M'}], 
+//               ['February',{v:31, f:'$31M'}], 
+//               ['March',{v:61, f:'$61M'}], 
+//               ['April',{v:26, f:'$26M'}] 
+//             ]); 
+//             // Create and draw the visualization. 
+//             new google.visualization.PieChart( 
+//               document.getElementById(canvasId)). 
+//                 draw(data, {is3D:true}); 
+// 			
+// 		}();
+			
+
 ; if ((typeof SC !== 'undefined') && SC && SC.scriptDidLoad) SC.scriptDidLoad('habitqueue');

@@ -115,6 +115,7 @@ SC.setupBodyClassNames = function() {
   <link href="/static/sproutcore/foundation/en/current/stylesheet.css?1296877287" rel="stylesheet" type="text/css" />
   <link href="/static/sproutcore/desktop/en/current/stylesheet.css?1296877287" rel="stylesheet" type="text/css" />
   <link href="/static/sproutcore/standard_theme/en/current/stylesheet.css?1296877288" rel="stylesheet" type="text/css" />
+  <link href="/static/habitqueue/en/current/stylesheet.css?1297054444" rel="stylesheet" type="text/css" />
    
     
   </head>
@@ -136,25 +137,33 @@ if (SC.setupBodyClassNames) SC.setupBodyClassNames() ;
 
 
 <div id="loading">
+
 <p class="loading">Loading...<p>
 
 
 </div>
-  <script type="text/javascript" src="/static/sproutcore/debug/en/current/javascript.js?1297020612"></script>
-  <script type="text/javascript" src="/static/sproutcore/testing/en/current/javascript.js?1297020612"></script>
-  <script type="text/javascript" src="/static/sproutcore/runtime/en/current/javascript.js?1297020612"></script>
-  <script type="text/javascript" src="/static/sproutcore/foundation/en/current/javascript.js?1297020612"></script>
-  <script type="text/javascript" src="/static/sproutcore/desktop/en/current/javascript.js?1297020612"></script>
-  <script type="text/javascript" src="/static/sproutcore/datastore/en/current/javascript.js?1297020612"></script>
-  <script type="text/javascript" src="/static/sproutcore/en/current/javascript.js?1297020612"></script>
-  <script type="text/javascript" src="/static/habitqueue/en/current/bundle_info.js?1297020612"></script>
-  <script type="text/javascript" src="/static/habitqueue/en/current/source/core.js?1296981118"></script>
-  <script type="text/javascript" src="/static/habitqueue/en/current/source/controllers/tasks.js?1296981074"></script>
-  <script type="text/javascript" src="/static/habitqueue/en/current/source/models/task.js?1297019938"></script>
-  <script type="text/javascript" src="/static/habitqueue/en/current/source/data_sources/task.js?1297020014"></script>
-  <script type="text/javascript" src="/static/habitqueue/en/current/source/fixtures/task.js?1296934217"></script>
-  <script type="text/javascript" src="/static/habitqueue/en/current/source/resources/main_page.js?1297019843"></script>
-  <script type="text/javascript" src="/static/habitqueue/en/current/source/main.js?1297016671"></script>
+    <!-- Resources to be removed from DOM on page load -->
+    <div id="resources" style="display:none; visibility: hidden;">
+      <script type="text/javascript" src="http://www.google.com/jsapi"></script> 
+<script type="text/javascript"> 
+      google.load('visualization', '1', {packages: ['piechart']}); 
+</script>
+    </div>
+  <script type="text/javascript" src="/static/sproutcore/debug/en/current/javascript.js?1297055413"></script>
+  <script type="text/javascript" src="/static/sproutcore/testing/en/current/javascript.js?1297055413"></script>
+  <script type="text/javascript" src="/static/sproutcore/runtime/en/current/javascript.js?1297055413"></script>
+  <script type="text/javascript" src="/static/sproutcore/foundation/en/current/javascript.js?1297055413"></script>
+  <script type="text/javascript" src="/static/sproutcore/desktop/en/current/javascript.js?1297055413"></script>
+  <script type="text/javascript" src="/static/sproutcore/datastore/en/current/javascript.js?1297055413"></script>
+  <script type="text/javascript" src="/static/sproutcore/en/current/javascript.js?1297055413"></script>
+  <script type="text/javascript" src="/static/habitqueue/en/current/bundle_info.js?1297055413"></script>
+  <script type="text/javascript" src="/static/habitqueue/en/current/source/core.js?1297030462"></script>
+  <script type="text/javascript" src="/static/habitqueue/en/current/source/controllers/tasks.js?1297054609"></script>
+  <script type="text/javascript" src="/static/habitqueue/en/current/source/models/task.js?1297037656"></script>
+  <script type="text/javascript" src="/static/habitqueue/en/current/source/data_sources/task.js?1297043976"></script>
+  <script type="text/javascript" src="/static/habitqueue/en/current/source/fixtures/task.js?1297029706"></script>
+  <script type="text/javascript" src="/static/habitqueue/en/current/source/resources/main_page.js?1297054792"></script>
+  <script type="text/javascript" src="/static/habitqueue/en/current/source/main.js?1297037642"></script>
 <script type="text/javascript">String.preferredLanguage = "en";</script>
 	</body>
 </html>
