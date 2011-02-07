@@ -56,8 +56,8 @@ Habitqueue.tasksController = SC.ArrayController.create(
 	    this.invokeLater(function() {
 	      var contentIndex = this.indexOf(task);
 	      var list = Habitqueue.mainPage.getPath('mainPane.middleView.contentView.topLeftView');
-	      var listItem = list.itemViewForContentIndex(contentIndex);
-	      listItem.beginEditing();
+	      //var listItem = list.itemViewForContentIndex(contentIndex);//this breaks cause of the layout/splitview. fix later
+	      // listItem.beginEditing(); 
 	    });
 
 	    return YES;

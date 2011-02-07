@@ -35,7 +35,7 @@ Habitqueue.TaskDataSource = SC.DataSource.extend(
 
   fetch: function(store, query) {
      if (query === Habitqueue.TASKS_QUERY) {
-		
+		console.log(this.getServerView('allTasks'));
           SC.Request.getUrl(this.getServerView('allTasks')).json()
                          .header('Accept', 'application/json')
                          .notify(this, 'didFetchTasks', store, query)
@@ -50,7 +50,6 @@ Habitqueue.TaskDataSource = SC.DataSource.extend(
 	    var body = response.get('encodedBody');
 	    var couchResponse = SC.json.decode(body);
 	    var records = couchResponse.rows.getEach('value');
-		console.log(records);
 	    store.loadRecords(Habitqueue.Task, records);
 	    store.dataSourceDidFetchQuery(query);
 	 } else {

@@ -25,6 +25,18 @@ Habitqueue.compositionChart = SC.Page.create({
     escapeHTML: NO,
     classNames: 'composition-monitor',
 	value: '<h3>This is who you are</h3><div id="visualization">NOTHING IS HAPPENING WTF</div>',
+	didFetchTasks: function(response, store, query) {
+	  					  if(SC.ok(response)) {
+	  					    var body = response.get('encodedBody');
+	  					    var couchResponse = SC.json.decode(body);
+	  					    var records = couchResponse.rows.getEach('value');
+	  						console.log(records);
+	  					    store.loadRecords(Habitqueue.Task, records);
+	  					    store.dataSourceDidFetchQuery(query);
+	  					 } else {
+	  					    store.dataSourceDidErrorQuery(query, response);
+	  					 }
+	 },
 	didAppendToDocument: function(){ 
 	        this.initChart(); 
 	},
@@ -36,6 +48,23 @@ Habitqueue.compositionChart = SC.Page.create({
                 data.addColumn('string', 'lifelet'); 
 
                 data.addColumn('number', 'percent'); 
+					// //////////HAAAAAAAAAAAAAAAAAAAACK //fix this tomorrow
+					// // instantiate a new XMLHttpRequest object
+					// var req = new XMLHttpRequest()
+					// // Open a GET request to "/all_dbs"
+					// req.open("GET", "http://spreelanka.couchone.com/habitqueue/_design/app/_view/tagSum")
+					// // Send nothing as the request body
+					// req.send("")
+					// // Get the response
+					// console.log(req.responseText);
+					var hk = SC.Request.getUrl("http://spreelanka.couchone.com/habitqueue/_design/app/_view/tagSum");
+//					.header('Accept', 'application/json')
+//					.json();//.get('body').content;
+					console.log(hk);
+//					["some_database", "another_database"]
+				          //SC.Request.getUrl("spreelanka.couchone.com/habitqueue/_design/app/_view/allTasks").json();
+
+					//////////
                 data.addRows([ 
                   ['January',{v:20, f:'$20M'}], 
                   ['February',{v:31, f:'$31M'}], 
